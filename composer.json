@@ -1,6 +1,5 @@
 {
-    "name": "simple-bus/serialization",
-    "type": "library",
+    "name": "dlakomski/serialization",
     "description": "Generic classes and interfaces for serializing messages",
     "keywords": [
         "messages",
@@ -24,16 +23,14 @@
             "homepage": "http://php-and-symfony.matthiasnoback.nl"
         }
     ],
+    "type": "library",
     "require": {
-        "php": "^8.0"
+        "php": "^8.2"
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.11",
-        "phpunit/phpunit": "^9.5.5",
-        "symfony/phpunit-bridge": "^6.0"
-    },
-    "config": {
-        "sort-packages": true
+        "phpunit/phpunit": "^11.5.46",
+        "symfony/phpunit-bridge": "^6.4.23 || ^7.4"
     },
     "autoload": {
         "psr-4": {
@@ -43,6 +40,12 @@
     "autoload-dev": {
         "psr-4": {
             "SimpleBus\\Serialization\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true
         }
     },
     "minimum-stability": "dev",

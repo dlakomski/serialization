@@ -2,6 +2,7 @@
 
 namespace SimpleBus\Serialization\Tests\Message\Envelope;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use SimpleBus\Serialization\Envelope\DefaultEnvelope;
 use SimpleBus\Serialization\Envelope\DefaultEnvelopeFactory;
@@ -9,9 +10,7 @@ use SimpleBus\Serialization\Tests\Fixtures\DummyMessage;
 
 class DefaultEnvelopeFactoryTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function itCreatesADefaultMessageEnvelope(): void
     {
         $factory = new DefaultEnvelopeFactory();
@@ -23,9 +22,7 @@ class DefaultEnvelopeFactoryTest extends TestCase
         $this->assertSame($message, $envelope->message());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itReturnsTheClassOfTheDefaultMessageEnvelope(): void
     {
         $factory = new DefaultEnvelopeFactory();

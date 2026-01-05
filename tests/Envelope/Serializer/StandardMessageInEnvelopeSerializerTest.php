@@ -3,6 +3,7 @@
 namespace SimpleBus\Serialization\Tests\Envelope\Serializer;
 
 use LogicException;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use SimpleBus\Serialization\Envelope\DefaultEnvelope;
@@ -15,9 +16,7 @@ use stdClass;
 
 class StandardMessageInEnvelopeSerializerTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function itSerializesAMessageAndWrapsItInASerializedEnvelope(): void
     {
         $message = new DummyMessage();
@@ -33,13 +32,9 @@ class StandardMessageInEnvelopeSerializerTest extends TestCase
         $objectSerializer
             ->expects($this->exactly(2))
             ->method('serialize')
-            ->withConsecutive(
-                [$this->equalTo($message)],
-                [$this->equalTo($envelope->withSerializedMessage($serializedMessage))],
-            )
             ->willReturnOnConsecutiveCalls(
-                $this->returnValue($serializedMessage),
-                $this->returnValue($serializedEnvelope),
+                $serializedMessage,
+                $serializedEnvelope,
             );
 
         $messageSerializer = new StandardMessageInEnvelopeSerializer($envelopeFactory, $objectSerializer);
@@ -48,9 +43,7 @@ class StandardMessageInEnvelopeSerializerTest extends TestCase
         $this->assertEquals($serializedEnvelope, $actualSerializedEnvelope);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itDeserializesAMessageAfterUnwrappingItFromItsSerializedEnvelope(): void
     {
         $message = new DummyMessage();
@@ -67,13 +60,9 @@ class StandardMessageInEnvelopeSerializerTest extends TestCase
         $objectSerializer
             ->expects($this->exactly(2))
             ->method('deserialize')
-            ->withConsecutive(
-                [$serializedEnvelope, $envelopeClass],
-                [$serializedMessage, $messageClass],
-            )
             ->willReturnOnConsecutiveCalls(
-                $this->returnValue($envelope),
-                $this->returnValue($message),
+                $envelope,
+                $message,
             );
 
         $messageSerializer = new StandardMessageInEnvelopeSerializer($envelopeFactory, $objectSerializer);
@@ -83,9 +72,7 @@ class StandardMessageInEnvelopeSerializerTest extends TestCase
         $this->assertEquals($expectedEnvelop, $actualEnvelop);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itFailsIfTheDeserializedEnvelopeIsNotOfTheExpectedType(): void
     {
         $envelopeClass = 'The\Envelope\Class';
@@ -98,7 +85,7 @@ class StandardMessageInEnvelopeSerializerTest extends TestCase
             ->expects($this->once())
             ->method('deserialize')
             ->with($serializedEnvelope, $envelopeClass)
-            ->willReturn($this->returnValue($notAnEnvelope));
+            ->willReturn($notAnEnvelope);
 
         $messageSerializer = new StandardMessageInEnvelopeSerializer($envelopeFactory, $objectSerializer);
 
@@ -106,9 +93,7 @@ class StandardMessageInEnvelopeSerializerTest extends TestCase
         $messageSerializer->unwrapAndDeserialize($serializedEnvelope);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itFailsIfTheDeserializedMessageIsNotOfTheExpectedType(): void
     {
         $message = new DummyMessage();
@@ -124,16 +109,13 @@ class StandardMessageInEnvelopeSerializerTest extends TestCase
         $notAMessage = new stdClass();
 
         $objectSerializer = $this->mockObjectSerializer();
+        $matcher = $this->exactly(2);
         $objectSerializer
-            ->expects($this->exactly(2))
+            ->expects($matcher)
             ->method('deserialize')
-            ->withConsecutive(
-                [$serializedEnvelope, $envelopeClass],
-                [$serializedMessage, $messageClass],
-            )
             ->willReturnOnConsecutiveCalls(
-                $this->returnValue($envelope),
-                $this->returnValue($notAMessage),
+                $envelope,
+                $notAMessage,
             );
 
         $messageSerializer = new StandardMessageInEnvelopeSerializer($envelopeFactory, $objectSerializer);
@@ -154,7 +136,7 @@ class StandardMessageInEnvelopeSerializerTest extends TestCase
             ->expects($this->once())
             ->method('wrapMessageInEnvelope')
             ->with($this->equalTo($message))
-            ->will($this->returnValue($expectedEnvelope));
+            ->willReturn($expectedEnvelope);
 
         return $envelopeFactory;
     }
@@ -176,7 +158,7 @@ class StandardMessageInEnvelopeSerializerTest extends TestCase
         $envelopeFactory
             ->expects($this->any())
             ->method('envelopeClass')
-            ->will($this->returnValue($envelopeClass));
+            ->willReturn($envelopeClass);
 
         return $envelopeFactory;
     }

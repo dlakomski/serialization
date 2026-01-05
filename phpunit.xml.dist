@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" backupGlobals="false" colors="true" bootstrap="tests/bootstrap.php" failOnRisky="true" failOnWarning="true">
-  <coverage>
-    <include>
-      <directory>./src</directory>
-    </include>
-  </coverage>
-  <php>
-    <ini name="error_reporting" value="-1"/>
-    <ini name="intl.default_locale" value="en"/>
-    <ini name="intl.error_level" value="0"/>
-    <ini name="memory_limit" value="-1"/>
-    <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[direct]=0"/>
-  </php>
-  <testsuites>
-    <testsuite name="Everything">
-      <directory>./tests/</directory>
-    </testsuite>
-  </testsuites>
-  <listeners>
-    <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
-  </listeners>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd" colors="true"
+         bootstrap="tests/bootstrap.php" failOnRisky="true" failOnWarning="true">
+    <coverage>
+    </coverage>
+    <php>
+        <ini name="error_reporting" value="-1"/>
+        <ini name="intl.default_locale" value="en"/>
+        <ini name="intl.error_level" value="0"/>
+        <ini name="memory_limit" value="-1"/>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[direct]=0"/>
+    </php>
+    <testsuites>
+        <testsuite name="Everything">
+            <directory>./tests/</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>
